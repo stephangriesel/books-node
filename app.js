@@ -4,7 +4,17 @@ const hbs = require('hbs');
 const mongoose = require('mongoose');
 
 mongoose.connect("mongodb://localhost/nodekb");
-let db = mongoose.connection;
+var db = mongoose.connection;
+
+// Check connection
+db.once('open', function(){
+    console.log("Connected to MongoDB");
+});
+
+// DB error check
+db.on('error', function(err){
+    console.log(err);
+});
 
 
 // Handlebars 
