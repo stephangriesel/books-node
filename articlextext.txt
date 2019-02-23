@@ -1,0 +1,22 @@
+var articles = [
+        {
+            id:1,
+            title: "Nommer 1",
+            author: "Stephan Griesel",
+            body: "Description of article 1"
+        },
+        {
+            id:2,
+            title: "Nommer 2",
+            author: "Stephan Griesel",
+            body: "Description of article 2"
+        },
+        {
+            id:3,
+            title: "Nommer 3",
+            author: "Stephan Griesel",
+            body: "Description of article 3"
+        },
+    ]
+
+

@@ -6,16 +6,6 @@ const mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost/nodekb");
 var db = mongoose.connection;
 
-// Check connection
-db.once('open', function(){
-    console.log("Connected to MongoDB");
-});
-
-// DB error check
-db.on('error', function(err){
-    console.log(err);
-});
-
 
 // Handlebars 
 app.set('view engine', 'hbs');
@@ -57,5 +47,3 @@ app.get("/",function(req, res) {
 app.listen("3000", function() {
     console.log("Connected on port 3000")
 });
-
-
