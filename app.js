@@ -1,6 +1,7 @@
 const express = require("express");
 const hbs = require('hbs');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 mongoose.connect("mongodb://localhost/newDB");
 var db = mongoose.connection;
@@ -25,6 +26,13 @@ var Article = require('./models/article');
 app.set('view engine', 'hbs');
 app.set("views", __dirname +  "/views");
 hbs.registerPartials(__dirname + "/views/partials");
+
+// Body Parser 
+//parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
 
 //Routes
 app.get("/",function(req, res) {
@@ -51,8 +59,19 @@ app.get("/articles/add", function(req, res){
 // Submit route
 
 app.post("/articles/add", function(req,res){
-    console.log("Submitted");
-    return;
+    var article = new Article();
+    article.title = req.body.title;
+    article.author = req.body.author;
+    article.body = req.body.body;
+
+    article.save(function(err){
+        if(err){
+            console.log(err);
+            return;
+        } else {
+            res.redirect('/');
+        }
+    })
 })
 
 
