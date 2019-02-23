@@ -19,7 +19,7 @@ const app = express();
 
 // Model
 var Article = require('./models/article');
-console.log(Article);
+// console.log(Article);
 
 // Handlebars 
 app.set('view engine', 'hbs');
@@ -29,17 +29,28 @@ hbs.registerPartials(__dirname + "/views/partials");
 //Routes
 app.get("/",function(req, res) {
     Article.find({}, function(err, articles){
-        res.render("index", {
-            title:'Articles',
-            articles: articles
-        });
+        if(err) {
+            console.log(err)
+        } else {
+            res.render("index", {
+                title:'Articles',
+                articles: articles
+            });
+        }
+        
     });
         
 });
 
-// app.get("/articles/add",function(req, res) { 
-//     res.render("add_article",);
-// });
+// Add article page
+
+app.get("/article", function(req, res){
+    res.render('add_article');
+  });
+
+  // Submit route
+
+
 
 app.listen("3000", function() {
     console.log("Connected on port 3000")
