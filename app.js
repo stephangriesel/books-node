@@ -44,11 +44,16 @@ app.get("/",function(req, res) {
 
 // Add article page
 
-app.get("/article", function(req, res){
+app.get("/articles/add", function(req, res){
     res.render('add_article');
   });
 
-  // Submit route
+// Submit route
+
+app.post("/articles/add", function(req,res){
+    console.log("Submitted");
+    return;
+})
 
 
 
