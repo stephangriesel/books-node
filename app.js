@@ -3,9 +3,20 @@ const app = express();
 const hbs = require('hbs');
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb://localhost/nodekb");
+mongoose.connect("mongodb://localhost/newDB");
 var db = mongoose.connection;
 
+// Check DB connection
+db.once('open', function(){
+    console.log('Connected to MongoDB');
+})
+
+db.on('error', function(err){
+    console.log(err);
+})
+
+// Model
+// var ArticleModel = require('./models/article');
 
 // Handlebars 
 app.set('view engine', 'hbs');
@@ -14,11 +25,12 @@ hbs.registerPartials(__dirname + "/views/partials");
 
 //Routes
 app.get("/",function(req, res) {
+
     var articles = [
         {
             id:1,
             title: "Nommer 1",
-            author: "Stephan Griesel",
+            author: "Stephan Grieselssss",
             body: "Description of article 1"
         },
         {
@@ -37,7 +49,7 @@ app.get("/",function(req, res) {
     res.render("index", {
         title: 'Articles',
         articles: articles
-    });
+    });    
 });
 
 // app.get("/articles/add",function(req, res) { 
