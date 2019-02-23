@@ -9,7 +9,7 @@ hbs.registerPartials(__dirname + "/views/partials");
 
 //Routes
 app.get("/",function(req, res) {
-    let articles = [
+    var articles = [
         {
             id:1,
             title: "Nommer 1",
@@ -35,9 +35,9 @@ app.get("/",function(req, res) {
     });
 });
 
-app.get("/articles/add",function(req, res) { 
-    res.render("add_article",);
-});
+// app.get("/articles/add",function(req, res) { 
+//     res.render("add_article",);
+// });
 
 app.listen("3000", function() {
     console.log("Connected on port 3000")
