@@ -1,5 +1,4 @@
 const express = require("express");
-const app = express();
 const hbs = require('hbs');
 const mongoose = require('mongoose');
 
@@ -15,8 +14,12 @@ db.on('error', function(err){
     console.log(err);
 })
 
+// Init App
+const app = express();
+
 // Model
-// var ArticleModel = require('./models/article');
+var Article = require('./models/article');
+console.log(Article);
 
 // Handlebars 
 app.set('view engine', 'hbs');
@@ -25,31 +28,13 @@ hbs.registerPartials(__dirname + "/views/partials");
 
 //Routes
 app.get("/",function(req, res) {
-
-    var articles = [
-        {
-            id:1,
-            title: "Nommer 1",
-            author: "Stephan Grieselssss",
-            body: "Description of article 1"
-        },
-        {
-            id:2,
-            title: "Nommer 2",
-            author: "Stephan Griesel",
-            body: "Description of article 2"
-        },
-        {
-            id:3,
-            title: "Nommer 3",
-            author: "Stephan Griesel",
-            body: "Description of article 3"
-        },
-    ]
-    res.render("index", {
-        title: 'Articles',
-        articles: articles
-    });    
+    Article.find({}, function(err, articles){
+        res.render("index", {
+            title:'Articles',
+            articles: articles
+        });
+    });
+        
 });
 
 // app.get("/articles/add",function(req, res) { 
