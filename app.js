@@ -1,6 +1,11 @@
 const express = require("express");
 const app = express();
 const hbs = require('hbs');
+const mongoose = require('mongoose');
+
+mongoose.connect("mongodb://localhost/nodekb");
+let db = mongoose.connection;
+
 
 // Handlebars 
 app.set('view engine', 'hbs');
