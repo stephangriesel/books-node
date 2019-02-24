@@ -1,10 +1,10 @@
 <div class="wrapper">
-<h1>Add an article</h1>
-<form method="post" action="/articles/add">
+<h1>Edit article</h1>
+<form method="post" action="/articles/edit/"+article_id>
     <div id="form-group">
         <div>
             <h3>Name:</h3>
-            <input class="form-control" name="title" type="text">
+            <input class="form-control" name="title" type="text" value="article.title">
         </div>
         <div>
             <h3>Author</h3>

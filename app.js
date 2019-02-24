@@ -1,7 +1,20 @@
 const express = require("express");
+// Init App
+const app = express();
 const hbs = require('hbs');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
+
+
+// Handlebars 
+app.set('view engine', 'hbs');
+app.set("views", __dirname +  "/views");
+// Register partials
+hbs.registerPartials(__dirname + "/views/partials");
+// Public folder
+app.use(express.static(path.join(__dirname, '/public')));
+
 
 mongoose.connect("mongodb://localhost/newDB");
 var db = mongoose.connection;
@@ -15,24 +28,24 @@ db.on('error', function(err){
     console.log(err);
 })
 
-// Init App
-const app = express();
-
 // Model
 var Article = require('./models/article');
 // console.log(Article);
-
-// Handlebars 
-app.set('view engine', 'hbs');
-app.set("views", __dirname +  "/views");
-hbs.registerPartials(__dirname + "/views/partials");
 
 // Body Parser 
 //parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
+// Get article
+// app.get("/article/:id", function(req,res) {
+//     Article.findById(req.params.id, function(err, article){
+//         console.log(article);
+//         return;
+//     })
+// })
 
 //Routes
 app.get("/",function(req, res) {
@@ -42,7 +55,7 @@ app.get("/",function(req, res) {
         } else {
             res.render("index", {
                 title:'Articles',
-                articles: articles
+                articles: articles // Confused by this, please explain
             });
         }
         
@@ -51,13 +64,21 @@ app.get("/",function(req, res) {
 });
 
 // Add article page
-
 app.get("/articles/add", function(req, res){
     res.render('add_article');
   });
 
-// Submit route
+// Load edit form
+app.get("/article/edit/:id", function(req,res) {
+    Article.findById(req.params.id, function(err, article){
+        res.render('edit_article', {
+            article:article
+        });
+    });
+});
 
+
+// Submit route
 app.post("/articles/add", function(req,res){
     var article = new Article();
     article.title = req.body.title;
